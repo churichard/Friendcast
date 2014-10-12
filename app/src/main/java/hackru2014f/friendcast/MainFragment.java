@@ -21,7 +21,6 @@ import java.util.Arrays;
 
 public class MainFragment extends Fragment {
     private static final String TAG = "MainFragment";
-    private TextView userInfoTextView;
     private UiLifecycleHelper uiHelper;
 
     private Session.StatusCallback callback = new Session.StatusCallback() {
@@ -88,28 +87,12 @@ public class MainFragment extends Fragment {
         authButton.setFragment(this);
         authButton.setReadPermissions(Arrays.asList("public_profile", "user_friends"));
 
-        userInfoTextView = (TextView) view.findViewById(R.id.userInfoTextView);
-
         return view;
-    }
-
-    private String buildUserInfoDisplay(GraphUser user) {
-        StringBuilder userInfo = new StringBuilder("");
-
-        // Example: typed access (name)
-        // - no special permissions required
-        userInfo.append(String.format("\nName: %s\n\n",
-                user.getName()));
-
-        userInfo.append(String.format("User ID: %s\n\n", user.getId()));
-
-        return userInfo.toString();
     }
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
             Log.i(TAG, "Logged in...");
-            userInfoTextView.setVisibility(View.VISIBLE);
 
             // Request user data and show the results
             Request.executeMeRequestAsync(session, new Request.GraphUserCallback() {
@@ -117,10 +100,7 @@ public class MainFragment extends Fragment {
                 @Override
                 public void onCompleted(GraphUser user, Response response) {
                     if (user != null) {
-                        // Display the parsed user info
-                        userInfoTextView.setText(buildUserInfoDisplay(user));
-
-                        Intent intent = new Intent(getActivity(), RestaurantPickerActivity.class);
+                        Intent intent = new Intent(getActivity(), FriendPickerActivity.class);
                         intent.putExtra(FriendPickerActivity.NAME, user.getName());
                         startActivity(intent);
                     }
@@ -129,7 +109,6 @@ public class MainFragment extends Fragment {
         }
         else if (state.isClosed()) {
             Log.i(TAG, "Logged out...");
-            userInfoTextView.setText("");
         }
     }
 }

@@ -6,23 +6,27 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="hackru2014f.friendcast.FriendPickerActivity">
+    tools:context="hackru2014f.friendcast.FriendPickerActivity"
+    android:background="@drawable/main_header_selector">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add friends to hang out with!"
+        android:textColor="@color/white"
+        android:textColorHighlight="@android:color/black"
         android:id="@+id/friendPickerTopText"
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:paddingTop="20dp"
-        android:textSize="20sp" />
+        style="@style/TextStyle" />
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_below="@id/friendPickerTopText"
         android:layout_above="@+id/friendPickerInviteButton"
+        android:textColor="@color/white"
         android:paddingTop="20dp"
         android:id="@+id/friendPickerListView"/>
 
@@ -30,6 +34,8 @@
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
+        style="@style/TextStyle"
+        android:textSize="20dp"
         android:id="@id/friendPickerInviteButton"
         android:gravity="center"
         android:text="Invite"
