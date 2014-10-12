@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.HttpMethod;
 import com.facebook.Request;
@@ -84,6 +85,13 @@ public class FriendPickerActivity extends Activity {
                 pushToFbId(friendList.get(i).id, name + " has invited you to eat!");
             }
         }
+
+        Context context = getApplicationContext();
+        CharSequence text = "Your invitation has been sent!";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     @Override
