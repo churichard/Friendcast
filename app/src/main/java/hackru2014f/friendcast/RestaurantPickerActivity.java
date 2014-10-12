@@ -100,8 +100,17 @@ public class RestaurantPickerActivity extends Activity {
         protected String doInBackground(Void... voids) {
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
+            double latitude;
+            double longitude;
+            if (location != null) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+            }
+            else {
+                latitude = 40.502660;
+                longitude = -74.451676;
+            }
+
 
             String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" + placesKey
                     + "&location=" + latitude + "," + longitude + "&types=food&rankby=distance";
