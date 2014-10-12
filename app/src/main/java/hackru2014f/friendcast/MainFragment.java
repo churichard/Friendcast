@@ -1,8 +1,6 @@
 package hackru2014f.friendcast;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.facebook.HttpMethod;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
@@ -19,9 +16,6 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -127,6 +121,7 @@ public class MainFragment extends Fragment {
                         userInfoTextView.setText(buildUserInfoDisplay(user));
 
                         Intent intent = new Intent(getActivity(), FriendPickerActivity.class);
+                        intent.putExtra(FriendPickerActivity.NAME, user.getName());
                         startActivity(intent);
                     }
                 }

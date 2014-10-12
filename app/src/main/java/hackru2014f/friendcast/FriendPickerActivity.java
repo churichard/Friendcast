@@ -2,14 +2,14 @@ package hackru2014f.friendcast;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,6 +17,9 @@ import com.facebook.HttpMethod;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,17 +28,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FriendPickerActivity extends Activity {
-    FriendListAdapter friendListAdapter;
-    ArrayList<User> friendList;
+    public static final String NAME = "hackru2014f.friendcast.USER_NAME";
+
+    private FriendListAdapter friendListAdapter;
+    private ArrayList<User> friendList;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_picker);
 
+        Intent intent = getIntent();
+        name = intent.getStringExtra(NAME);
+
         friendList = new ArrayList<User>();
         friendListAdapter = new FriendListAdapter(getApplicationContext(), R.layout.friend_list_item, friendList);
-        ListView friendListView = (ListView) findViewById(R.id.friendListView);
+        ListView friendListView = (ListView) findViewById(R.id.friendPickerListView);
         friendListView.setAdapter(friendListAdapter);
 
         new Request(
@@ -47,7 +56,6 @@ public class FriendPickerActivity extends Activity {
                     public void onCompleted(Response response) {
                         try {
                             JSONArray friends = response.getGraphObject().getInnerJSONObject().getJSONArray("data");
-                            Log.d("Friends", friends.length() + "");
 
                             for(int i = 0; i < friends.length(); i++) {
                                 String name = friends.getJSONObject(i).getString("name");
@@ -66,6 +74,18 @@ public class FriendPickerActivity extends Activity {
         ).executeAsync();
     }
 
+    public void invite(View v) {
+        ListView friendListView = (ListView) findViewById(R.id.friendPickerListView);
+
+        for(int i = 0; i < friendList.size(); i++) {
+            CheckBox checkBox = (CheckBox) friendListView.getChildAt(i).findViewById(R.id.friendListItemCheckbox);
+
+            if(checkBox.isChecked()) {
+                pushToFbId(friendList.get(i).id, name + " has invited you to eat!");
+            }
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -76,6 +96,16 @@ public class FriendPickerActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void pushToFbId(String fbId, String message) {
+        ParseQuery pushQuery = ParseInstallation.getQuery();
+        pushQuery.whereEqualTo("fbid", fbId);
+        ParsePush push = new ParsePush();
+        push.setQuery(pushQuery);
+        push.setMessage(message);
+        push.sendInBackground();
+
     }
 
     private class FriendListAdapter extends ArrayAdapter<User> {

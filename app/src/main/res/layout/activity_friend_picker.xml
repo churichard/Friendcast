@@ -22,7 +22,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/friendPickerTopText"
+        android:layout_above="@+id/friendPickerInviteButton"
         android:paddingTop="20dp"
-        android:id="@+id/friendListView"/>
+        android:id="@+id/friendPickerListView"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:id="@id/friendPickerInviteButton"
+        android:gravity="center"
+        android:text="Invite"
+        android:onClick="invite" />
 
 </RelativeLayout>

@@ -1,19 +1,9 @@
 package hackru2014f.friendcast;
 
-import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
-
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParsePush;
-import com.parse.SaveCallback;
-
-import android.support.v4.app.FragmentActivity;
-import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity {
     private MainFragment mainFragment;
