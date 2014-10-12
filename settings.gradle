@@ -1,1 +1,1 @@
-include ':app', ':Friendcast:libs:facebook'
+include ':app', ':facebook'

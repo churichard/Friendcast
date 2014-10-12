@@ -82,7 +82,10 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="android-support-v4" level="project" />
     <orderEntry type="library" exported="" name="Parse-1.7.0" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.1.2" level="project" />
+    <orderEntry type="library" exported="" name="1_bolts-android-1.1.2" level="project" />
+    <orderEntry type="module" module-name="facebook" exported="" />
   </component>
 </module>
 

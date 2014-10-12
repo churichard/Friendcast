@@ -2,10 +2,10 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="/Users/richardchu/Downloads/facebook-android-sdk-3.19.0/facebook/src/main/assets" />
+        <source path="/Users/richardchu/Documents/GitHub/Friendcast/facebook/src/main/assets" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="/Users/richardchu/Downloads/facebook-android-sdk-3.19.0/facebook/src/debug/assets" />
+        <source path="/Users/richardchu/Documents/GitHub/Friendcast/facebook/src/debug/assets" />
     </dataSet>
 
 </merger>
