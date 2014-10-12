@@ -7,16 +7,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.facebook.Request;
+import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
+import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 
 import java.util.Arrays;
 
 public class MainFragment extends Fragment {
     private static final String TAG = "MainFragment";
+    private TextView userInfoTextView;
     private UiLifecycleHelper uiHelper;
 
     private Session.StatusCallback callback = new Session.StatusCallback() {
@@ -83,14 +88,44 @@ public class MainFragment extends Fragment {
         authButton.setFragment(this);
         authButton.setReadPermissions(Arrays.asList("public_profile", "user_friends"));
 
+        userInfoTextView = (TextView) view.findViewById(R.id.userInfoTextView);
+
         return view;
+    }
+
+    private String buildUserInfoDisplay(GraphUser user) {
+        StringBuilder userInfo = new StringBuilder("");
+
+        // Example: typed access (name)
+        // - no special permissions required
+        userInfo.append(String.format("\nName: %s\n\n",
+                user.getName()));
+
+        userInfo.append(String.format("User ID: %s\n\n", user.getId()));
+
+        return userInfo.toString();
     }
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
             Log.i(TAG, "Logged in...");
-        } else if (state.isClosed()) {
+            userInfoTextView.setVisibility(View.VISIBLE);
+
+            // Request user data and show the results
+            Request.executeMeRequestAsync(session, new Request.GraphUserCallback() {
+
+                @Override
+                public void onCompleted(GraphUser user, Response response) {
+                    if (user != null) {
+                        // Display the parsed user info
+                        userInfoTextView.setText(buildUserInfoDisplay(user));
+                    }
+                }
+            });
+        }
+        else if (state.isClosed()) {
             Log.i(TAG, "Logged out...");
+            userInfoTextView.setText("");
         }
     }
 }
