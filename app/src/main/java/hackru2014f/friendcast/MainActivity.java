@@ -2,8 +2,14 @@ package hackru2014f.friendcast;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParsePush;
+import com.parse.SaveCallback;
 
 
 public class MainActivity extends Activity {
