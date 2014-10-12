@@ -1,6 +1,8 @@
 package hackru2014f.friendcast;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;

@@ -1,5 +1,7 @@
 package hackru2014f.friendcast;
 
+import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.view.Menu;
@@ -11,6 +13,7 @@ import com.parse.ParsePush;
 import com.parse.SaveCallback;
 
 import android.support.v4.app.FragmentActivity;
+import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity {
     private MainFragment mainFragment;
