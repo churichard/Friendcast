@@ -33,6 +33,8 @@ public class FriendPickerActivity extends Activity {
     private FriendListAdapter friendListAdapter;
     private ArrayList<User> friendList;
     private String name;
+    private String restaurant;
+    private String vicinity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class FriendPickerActivity extends Activity {
 
         Intent intent = getIntent();
         name = intent.getStringExtra(NAME);
+        restaurant = intent.getStringExtra(RestaurantPickerActivity.RESTAURANT);
+        vicinity = intent.getStringExtra(RestaurantPickerActivity.VICINITY);
 
         friendList = new ArrayList<User>();
         friendListAdapter = new FriendListAdapter(getApplicationContext(), R.layout.friend_list_item, friendList);
@@ -81,7 +85,7 @@ public class FriendPickerActivity extends Activity {
             CheckBox checkBox = (CheckBox) friendListView.getChildAt(i).findViewById(R.id.friendListItemCheckbox);
 
             if(checkBox.isChecked()) {
-                pushToFbId(friendList.get(i).id, name + " has invited you to eat!");
+                pushToFbId(friendList.get(i).id, name + " has invited you to eat at " + restaurant + " (located at " + vicinity + ")!");
             }
         }
     }
@@ -105,7 +109,6 @@ public class FriendPickerActivity extends Activity {
         push.setQuery(pushQuery);
         push.setMessage(message);
         push.sendInBackground();
-
     }
 
     private class FriendListAdapter extends ArrayAdapter<User> {
@@ -124,7 +127,6 @@ public class FriendPickerActivity extends Activity {
             }
 
             ((TextView) convertView.findViewById(R.id.friendListItemName)).setText(users.get(position).name);
-
             return convertView;
         }
     }

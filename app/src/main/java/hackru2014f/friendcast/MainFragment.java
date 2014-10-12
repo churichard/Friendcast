@@ -120,7 +120,7 @@ public class MainFragment extends Fragment {
                         // Display the parsed user info
                         userInfoTextView.setText(buildUserInfoDisplay(user));
 
-                        Intent intent = new Intent(getActivity(), FriendPickerActivity.class);
+                        Intent intent = new Intent(getActivity(), RestaurantPickerActivity.class);
                         intent.putExtra(FriendPickerActivity.NAME, user.getName());
                         startActivity(intent);
                     }

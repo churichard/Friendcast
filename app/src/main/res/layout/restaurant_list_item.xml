@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/restaurantListItemName"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/restaurantListItemVicinity"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/restaurantListItemName" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="true"
+        android:layout_below="@id/restaurantListItemVicinity"
+        android:id="@+id/restaurantListItemRating"
+        android:visibility="invisible" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/restaurantListItemRadioButton"
+        android:checked="false"
+        android:focusable="false"
+        android:clickable="false"
+        android:enabled="false" />
+
+</RelativeLayout>

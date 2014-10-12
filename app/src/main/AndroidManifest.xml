@@ -9,22 +9,23 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <permission android:protectionLevel="signature"
-        android:name="hackru2014f.friendcast.permission.C2D_MESSAGE" />
+    <permission
+        android:name="hackru2014f.friendcast.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="hackru2014f.friendcast.permission.C2D_MESSAGE" />
 
     <application
-        android:name="FriendcastApplication"
+        android:name=".FriendcastApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,25 +34,31 @@
         </activity>
         <activity android:name="com.facebook.LoginActivity" />
         <activity android:name=".FriendPickerActivity" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
 
         <service android:name="com.parse.PushService" />
-        <receiver android:name="com.parse.ParseBroadcastReceiver">
+
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.parse.ParsePushBroadcastReceiver"
-            android:exported="false">
+        <receiver
+            android:name="com.parse.ParsePushBroadcastReceiver"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
                 <action android:name="com.parse.push.intent.DELETE" />
                 <action android:name="com.parse.push.intent.OPEN" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.parse.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
@@ -59,9 +66,19 @@
                 <category android:name="hackru2014f.friendcast" />
             </intent-filter>
         </receiver>
-        <meta-data android:name="com.parse.push.notification_icon"
+
+        <meta-data
+            android:name="com.parse.push.notification_icon"
             android:resource="@drawable/ic_launcher" />
 
+        <activity
+            android:name=".RestaurantPickerActivity"
+            android:label="@string/title_activity_restaurant_picker" >
+        </activity>
+        <activity
+            android:name=".ResponseActivity"
+            android:label="@string/title_activity_response" >
+        </activity>
     </application>
 
 </manifest>
