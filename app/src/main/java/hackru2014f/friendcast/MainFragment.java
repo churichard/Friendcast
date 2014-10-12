@@ -100,7 +100,7 @@ public class MainFragment extends Fragment {
                 @Override
                 public void onCompleted(GraphUser user, Response response) {
                     if (user != null) {
-                        Intent intent = new Intent(getActivity(), FriendPickerActivity.class);
+                        Intent intent = new Intent(getActivity(), RestaurantPickerActivity.class);
                         intent.putExtra(FriendPickerActivity.NAME, user.getName());
                         startActivity(intent);
                     }
