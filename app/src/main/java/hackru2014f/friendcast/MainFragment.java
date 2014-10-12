@@ -1,6 +1,8 @@
 package hackru2014f.friendcast;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.HttpMethod;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
@@ -16,6 +19,9 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -122,6 +128,33 @@ public class MainFragment extends Fragment {
                     }
                 }
             });
+
+            /* make the API call */
+            new Request(
+                    session,
+                    "/me/friends",
+                    null,
+                    HttpMethod.GET,
+                    new Request.Callback() {
+                        public void onCompleted(Response response) {
+                            try {
+                                JSONObject json = response.getGraphObject().getInnerJSONObject();
+                                JSONArray nameArray = json.getJSONArray("data");
+
+                                userInfoTextView.setText(userInfoTextView.getText() + "Friends:\n\n");
+
+                                for (int i = 0; i < nameArray.length(); i++) {
+                                    String name = nameArray.getJSONObject(i).getString("name");
+
+                                    userInfoTextView.setText(userInfoTextView.getText() + name);
+                                }
+                            }
+                            catch(Exception e){
+                                Log.e(TAG, "Friends list not showing up");
+                            };
+                        }
+                    }
+            ).executeAsync();
         }
         else if (state.isClosed()) {
             Log.i(TAG, "Logged out...");
