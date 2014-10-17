@@ -16,6 +16,7 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 import java.util.Arrays;
@@ -101,7 +102,8 @@ public class MainFragment extends Fragment {
                 @Override
                 public void onCompleted(GraphUser user, Response response) {
                     if (user != null) {
-                        ParseUser.getCurrentUser().put("fbid", user.getId());
+                        ParseInstallation.getCurrentInstallation().put("fbid", user.getId());
+
                         Intent intent = new Intent(getActivity(), RestaurantPickerActivity.class);
                         intent.putExtra(FriendPickerActivity.NAME, user.getName());
                         startActivity(intent);

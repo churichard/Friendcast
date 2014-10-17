@@ -44,7 +44,6 @@ public class RestaurantPickerActivity extends Activity {
     public static final String RESTAURANT = "hackru2014f.friendcast.RESTAURANT";
     public static final String VICINITY = "hackru2014f.friendcast.VICINITY";
 
-
     private RestaurantAdapter restaurantAdapter;
     private ArrayList<Restaurant> restaurantList;
     private String name;
