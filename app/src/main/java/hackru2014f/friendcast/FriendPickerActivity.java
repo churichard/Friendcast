@@ -17,14 +17,19 @@ import com.facebook.HttpMethod;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
+import com.parse.FunctionCallback;
+import com.parse.ParseCloud;
+import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FriendPickerActivity extends Activity {
@@ -32,7 +37,7 @@ public class FriendPickerActivity extends Activity {
 
     private FriendListAdapter friendListAdapter;
     private ArrayList<User> friendList;
-    private String name;
+    private String fbname;
     private String restaurant;
     private String vicinity;
 
@@ -42,7 +47,7 @@ public class FriendPickerActivity extends Activity {
         setContentView(R.layout.activity_friend_picker);
 
         Intent intent = getIntent();
-        name = intent.getStringExtra(NAME);
+        fbname = intent.getStringExtra(NAME);
         restaurant = intent.getStringExtra(RestaurantPickerActivity.RESTAURANT);
         vicinity = intent.getStringExtra(RestaurantPickerActivity.VICINITY);
 
@@ -85,7 +90,7 @@ public class FriendPickerActivity extends Activity {
             CheckBox checkBox = (CheckBox) friendListView.getChildAt(i).findViewById(R.id.friendListItemCheckbox);
 
             if(checkBox.isChecked()) {
-                pushToFbId(friendList.get(i).id, name + " has invited you to eat at " + restaurant + " (located at " + vicinity + ")!");
+                pushToFbId(friendList.get(i).id, fbname, restaurant, vicinity);
             }
         }
     }
@@ -102,13 +107,14 @@ public class FriendPickerActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void pushToFbId(String fbId, String message) {
-        ParseQuery pushQuery = ParseInstallation.getQuery();
-        pushQuery.whereEqualTo("fbid", fbId);
-        ParsePush push = new ParsePush();
-        push.setQuery(pushQuery);
-        push.setMessage(message);
-        push.sendInBackground();
+    public void pushToFbId(String fbId, String fbName, String placeName, String vicinity) {
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("fbid", fbId);
+        params.put("fbname", fbName);
+        params.put("placename", placeName);
+        params.put("vicinity", vicinity);
+
+        ParseCloud.callFunctionInBackground("push", params, null);  // No callback
     }
 
     private class FriendListAdapter extends ArrayAdapter<User> {

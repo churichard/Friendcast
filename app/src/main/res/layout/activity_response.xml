@@ -9,10 +9,72 @@
     tools:context="hackru2014f.friendcast.ResponseActivity">
 
     <TextView
-        android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/responseTopText"
         android:gravity="center"
-        android:textSize="30sp" />
+        android:textSize="40sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/responseTopText"
+        android:layout_marginTop="20dp"
+        android:id="@+id/responseLocationLabel"
+        android:text="Location: "
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/responseTopText"
+        android:layout_toRightOf="@id/responseLocationLabel"
+        android:id="@+id/responseLocationText"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/responseLocationLabel"
+        android:layout_marginTop="20dp"
+        android:id="@+id/responseVicinityLabel"
+        android:text="Vicinity: "
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/responseLocationLabel"
+        android:layout_toRightOf="@id/responseVicinityLabel"
+        android:id="@+id/responseVicinityText"
+        android:textSize="20sp" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/responseBottomDivider" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@id/responseBottomDivider"
+        android:layout_marginRight="5dp"
+        android:text="Accept"
+        android:background="#2ecc71" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignLeft="@id/responseBottomDivider"
+        android:layout_marginLeft="5dp"
+        android:text="Reject"
+        android:background="#e74c3c"/>
 
 </RelativeLayout>
