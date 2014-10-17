@@ -103,6 +103,7 @@ public class MainFragment extends Fragment {
                 public void onCompleted(GraphUser user, Response response) {
                     if (user != null) {
                         ParseInstallation.getCurrentInstallation().put("fbid", user.getId());
+                        ParseInstallation.getCurrentInstallation().saveInBackground();
 
                         Intent intent = new Intent(getActivity(), RestaurantPickerActivity.class);
                         intent.putExtra(FriendPickerActivity.NAME, user.getName());
