@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -17,7 +16,6 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.parse.ParseInstallation;
-import com.parse.ParseUser;
 
 import java.util.Arrays;
 

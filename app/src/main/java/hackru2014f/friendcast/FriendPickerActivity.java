@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,19 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.HttpMethod;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
-import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
-import com.parse.ParseException;
-import com.parse.ParseInstallation;
-import com.parse.ParseObject;
-import com.parse.ParsePush;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -95,6 +88,14 @@ public class FriendPickerActivity extends Activity {
                 pushToFbId(friendList.get(i).id, fbname, restaurant, vicinity);
             }
         }
+
+        // Displays a toast
+        Context context = getApplicationContext();
+        CharSequence text = "Your invitation has been sent!";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     @Override
