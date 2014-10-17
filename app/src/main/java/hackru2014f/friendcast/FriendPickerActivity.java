@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
+import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -114,7 +116,7 @@ public class FriendPickerActivity extends Activity {
         params.put("placename", placeName);
         params.put("vicinity", vicinity);
 
-        ParseCloud.callFunctionInBackground("push", params, null);  // No callback
+        ParseCloud.callFunctionInBackground("push", params, null);
     }
 
     private class FriendListAdapter extends ArrayAdapter<User> {

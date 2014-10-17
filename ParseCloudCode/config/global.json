@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Friendcast": {
+            "applicationId": "DYNquOP8ZIpkdkuEXi3iisJsZUpgnk8Kftz4b6D9", 
+            "masterKey": "V2IEJqPz1oIcGsjG6e6KegtX1zZgrPPxH4KJf7c4"
+        }, 
+        "_default": {
+            "link": "Friendcast"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.0"
+    }
+}
