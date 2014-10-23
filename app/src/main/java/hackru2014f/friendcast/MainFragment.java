@@ -109,8 +109,7 @@ public class MainFragment extends Fragment {
                     }
                 }
             });
-        }
-        else if (state.isClosed()) {
+        } else if (state.isClosed()) {
             Log.i(TAG, "Logged out...");
         }
     }

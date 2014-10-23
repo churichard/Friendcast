@@ -38,7 +38,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class RestaurantPickerActivity extends Activity {
     public static final String NAME = "hackru2014f.friendcast.USER_NAME";
     public static final String RESTAURANT = "hackru2014f.friendcast.RESTAURANT";
@@ -82,7 +81,7 @@ public class RestaurantPickerActivity extends Activity {
     }
 
     public void chooseRestaurant(View v) {
-        if(restaurantAdapter.selectedIndex != -1) {
+        if (restaurantAdapter.selectedIndex != -1) {
             Intent intent = new Intent(this, FriendPickerActivity.class);
             intent.putExtra(NAME, name);
             intent.putExtra(RESTAURANT, restaurantList.get(restaurantAdapter.selectedIndex).name);
@@ -98,18 +97,28 @@ public class RestaurantPickerActivity extends Activity {
         @Override
         protected String doInBackground(Void... voids) {
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            Location location = null;
             double latitude;
             double longitude;
+
+            boolean isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            boolean isNetworkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            if (isGPSEnabled && location == null) {
+                location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            }
+            if (isNetworkEnabled && location == null) {
+                location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }
+
             if (location != null) {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
-            }
-            else {
+            } else {
+                // Add code to select custom location
                 latitude = 40.502660;
                 longitude = -74.451676;
             }
-
 
             String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" + placesKey
                     + "&location=" + latitude + "," + longitude + "&types=food&rankby=distance";
@@ -152,18 +161,18 @@ public class RestaurantPickerActivity extends Activity {
                 JSONObject response = new JSONObject(result);
                 JSONArray results = response.getJSONArray("results");
 
-                for(int i = 0; i < results.length(); i++) {
+                for (int i = 0; i < results.length(); i++) {
                     JSONObject jsonObject = results.getJSONObject(i);
                     String name = "", vicinity = "";
                     float rating = -1;
 
-                    if(jsonObject.has("name")) {
+                    if (jsonObject.has("name")) {
                         name = jsonObject.getString("name");
                     }
-                    if(jsonObject.has("vicinity")) {
+                    if (jsonObject.has("vicinity")) {
                         vicinity = jsonObject.getString("vicinity");
                     }
-                    if(jsonObject.has("rating")) {
+                    if (jsonObject.has("rating")) {
                         rating = (float) jsonObject.getDouble("rating");
                     }
 
@@ -197,7 +206,7 @@ public class RestaurantPickerActivity extends Activity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            if(convertView == null) {
+            if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.restaurant_list_item, null);
             }
@@ -205,7 +214,7 @@ public class RestaurantPickerActivity extends Activity {
             ((TextView) convertView.findViewById(R.id.restaurantListItemName)).setText(restaurantList.get(position).name);
             ((TextView) convertView.findViewById(R.id.restaurantListItemVicinity)).setText(restaurantList.get(position).vicinity);
 
-            if(restaurantList.get(position).rating > 0) {
+            if (restaurantList.get(position).rating > 0) {
                 ((RatingBar) convertView.findViewById(R.id.restaurantListItemRating)).setRating(restaurantList.get(position).rating);
                 convertView.findViewById(R.id.restaurantListItemRating).setVisibility(View.VISIBLE);
             }
@@ -214,7 +223,7 @@ public class RestaurantPickerActivity extends Activity {
             radioButton.setClickable(false);
             radioButton.setFocusable(false);
 
-            if (selectedIndex == position){
+            if (selectedIndex == position) {
                 radioButton.setChecked(true);
             } else {
                 radioButton.setChecked(false);
@@ -239,7 +248,7 @@ public class RestaurantPickerActivity extends Activity {
         private String name, vicinity;
         private float rating;
 
-        public Restaurant(String name, String vicinity, float  rating) {
+        public Restaurant(String name, String vicinity, float rating) {
             this.name = name;
             this.vicinity = vicinity;
             this.rating = rating;
