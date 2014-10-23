@@ -73,11 +73,11 @@
 
         <activity
             android:name=".RestaurantPickerActivity"
-            android:label="@string/title_activity_restaurant_picker" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".ResponseActivity"
-            android:label="@string/title_activity_response" >
+            android:label="@string/app_name" >
         </activity>
     </application>
 

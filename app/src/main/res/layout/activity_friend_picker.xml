@@ -12,12 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add friends to hang out with!"
-        android:textColor="@color/white"
-        android:textColorHighlight="@android:color/black"
+        android:textSize="20sp"
         android:id="@+id/friendPickerTopText"
         android:gravity="center"
         android:layout_centerHorizontal="true"
-        android:paddingTop="20dp"
+        android:layout_marginTop="5dp"
         style="@style/TextStyle" />
 
     <ListView
@@ -25,19 +24,23 @@
         android:layout_height="40dp"
         android:layout_below="@id/friendPickerTopText"
         android:layout_above="@+id/friendPickerInviteButton"
-        android:textColor="@color/white"
-        android:paddingTop="20dp"
-        android:id="@+id/friendPickerListView"/>
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:id="@+id/friendPickerListView"
+        style="@style/TextStyle"/>
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        style="@style/TextStyle"
         android:textSize="20dp"
         android:id="@id/friendPickerInviteButton"
         android:gravity="center"
         android:text="Invite"
-        android:onClick="invite" />
+        android:background="@drawable/default_button"
+        android:onClick="invite"
+        android:textColor="@color/white"
+        android:layout_marginBottom="5dp"/>
 
 </RelativeLayout>

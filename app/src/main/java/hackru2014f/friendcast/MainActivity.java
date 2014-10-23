@@ -1,9 +1,16 @@
 package hackru2014f.friendcast;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
+import com.facebook.Session;
+import com.parse.ParseInstallation;
 
 public class MainActivity extends FragmentActivity {
     private MainFragment mainFragment;
@@ -45,5 +52,22 @@ public class MainActivity extends FragmentActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void friendcastButtonClick(View view) {
+        Session session = Session.getActiveSession();
+        if (session != null && session.isOpened()) {
+            Intent intent = new Intent(mainFragment.getActivity(), RestaurantPickerActivity.class);
+            intent.putExtra(FriendPickerActivity.NAME, ParseInstallation.getCurrentInstallation().get("fbname").toString());
+            startActivity(intent);
+        } else {
+            // Displays a toast
+            Context context = getApplicationContext();
+            CharSequence text = "Please login to Facebook first!";
+            int duration = Toast.LENGTH_LONG;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
 }

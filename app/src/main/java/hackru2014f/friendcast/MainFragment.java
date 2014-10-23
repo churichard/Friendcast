@@ -100,12 +100,10 @@ public class MainFragment extends Fragment {
                 @Override
                 public void onCompleted(GraphUser user, Response response) {
                     if (user != null) {
-                        ParseInstallation.getCurrentInstallation().put("fbid", user.getId());
-                        ParseInstallation.getCurrentInstallation().saveInBackground();
-
-                        Intent intent = new Intent(getActivity(), RestaurantPickerActivity.class);
-                        intent.putExtra(FriendPickerActivity.NAME, user.getName());
-                        startActivity(intent);
+                        ParseInstallation parse = ParseInstallation.getCurrentInstallation();
+                        parse.put("fbname", user.getName());
+                        parse.put("fbid", user.getId());
+                        parse.saveInBackground();
                     }
                 }
             });

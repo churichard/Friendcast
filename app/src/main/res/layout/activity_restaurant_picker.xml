@@ -15,18 +15,20 @@
         android:id="@+id/restaurantPickerTopText"
         android:gravity="center"
         android:layout_centerHorizontal="true"
-        android:paddingTop="20dp"
-        android:textSize="20sp" />
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+        style="@style/TextStyle"/>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/restaurantPickerTopText"
         android:layout_above="@+id/restaurantPickerInviteButton"
-        android:paddingTop="20dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/restaurantPickerListView"
         android:choiceMode="singleChoice"
-        android:descendantFocusability="beforeDescendants" />
+        android:descendantFocusability="beforeDescendants"
+        style="@style/TextStyle" />
 
     <Button
         android:layout_width="fill_parent"
@@ -35,6 +37,10 @@
         android:id="@id/restaurantPickerInviteButton"
         android:gravity="center"
         android:text="Next"
-        android:onClick="chooseRestaurant" />
+        android:textColor="@color/white"
+        android:background="@drawable/default_button"
+        android:onClick="chooseRestaurant"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"/>
 
 </RelativeLayout>

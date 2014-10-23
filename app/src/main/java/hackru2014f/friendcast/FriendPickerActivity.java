@@ -19,6 +19,7 @@ import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.parse.ParseCloud;
+import com.parse.ParseInstallation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +31,7 @@ import java.util.List;
 public class FriendPickerActivity extends Activity {
     public static final String NAME = "hackru2014f.friendcast.USER_NAME";
 
+    private MainActivity mainActivity;
     private FriendListAdapter friendListAdapter;
     private ArrayList<User> friendList;
     private String fbname;
@@ -40,6 +42,8 @@ public class FriendPickerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_picker);
+
+        mainActivity = new MainActivity();
 
         Intent intent = getIntent();
         fbname = intent.getStringExtra(NAME);
@@ -61,7 +65,7 @@ public class FriendPickerActivity extends Activity {
                         try {
                             JSONArray friends = response.getGraphObject().getInnerJSONObject().getJSONArray("data");
 
-                            for(int i = 0; i < friends.length(); i++) {
+                            for (int i = 0; i < friends.length(); i++) {
                                 String name = friends.getJSONObject(i).getString("name");
                                 String id = friends.getJSONObject(i).getString("id");
 
@@ -81,21 +85,24 @@ public class FriendPickerActivity extends Activity {
     public void invite(View v) {
         ListView friendListView = (ListView) findViewById(R.id.friendPickerListView);
 
-        for(int i = 0; i < friendList.size(); i++) {
+        for (int i = 0; i < friendList.size(); i++) {
             CheckBox checkBox = (CheckBox) friendListView.getChildAt(i).findViewById(R.id.friendListItemCheckbox);
 
-            if(checkBox.isChecked()) {
+            if (checkBox.isChecked()) {
                 pushToFbId(friendList.get(i).id, fbname, restaurant, vicinity);
             }
         }
 
         // Displays a toast
         Context context = getApplicationContext();
-        CharSequence text = "Your invitation has been sent!";
+        CharSequence text = "Your Friendcast has been sent!";
         int duration = Toast.LENGTH_LONG;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -130,7 +137,7 @@ public class FriendPickerActivity extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            if(convertView == null) {
+            if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.friend_list_item, null);
             }
