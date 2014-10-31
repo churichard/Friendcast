@@ -1,12 +1,17 @@
 package hackru2014f.friendcast;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,10 +20,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.parse.ParseGeoPoint;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -39,6 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RestaurantPickerActivity extends Activity {
+    private static final String TAG = "RestaurantPickerActivity";
     public static final String NAME = "hackru2014f.friendcast.USER_NAME";
     public static final String RESTAURANT = "hackru2014f.friendcast.RESTAURANT";
     public static final String VICINITY = "hackru2014f.friendcast.VICINITY";
@@ -46,6 +55,9 @@ public class RestaurantPickerActivity extends Activity {
     private RestaurantAdapter restaurantAdapter;
     private ArrayList<Restaurant> restaurantList;
     private String name;
+
+    private double latitude;
+    private double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +69,6 @@ public class RestaurantPickerActivity extends Activity {
 
         restaurantList = new ArrayList<Restaurant>();
         restaurantAdapter = new RestaurantAdapter(this, R.layout.restaurant_list_item, restaurantList);
-
-        new GetLocalRestaurantsTask().execute();
     }
 
     @Override
@@ -96,6 +106,58 @@ public class RestaurantPickerActivity extends Activity {
         }
     }
 
+    public void dialogLocation(String strAddress) {
+        Geocoder coder = new Geocoder(RestaurantPickerActivity.this);
+        List<Address> address;
+
+        try {
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                Log.e(TAG, "Bad things have happened");
+            }
+            Address location = address.get(0);
+
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        } catch (Exception e) {
+            Log.e(TAG, "Address not valid");
+        }
+    }
+
+    public synchronized void getAddress() {
+        Runnable dialogRunnable = new Runnable() {
+            public void run() {
+                AlertDialog.Builder alert = new AlertDialog.Builder(RestaurantPickerActivity.this);
+
+                final EditText input = new EditText(RestaurantPickerActivity.this);
+
+                alert.setView(input)
+                        .setMessage(R.string.dialog_message)
+                        .setTitle(R.string.dialog_title)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                String strAddress = input.getText().toString();
+                                dialogLocation(strAddress);
+                                synchronized (RestaurantPickerActivity.this) {
+                                    RestaurantPickerActivity.this.notify();
+                                }
+                            }
+                        });
+
+                alert.show();
+            }
+        };
+
+        synchronized (dialogRunnable) {
+            runOnUiThread(dialogRunnable);
+            try {
+                RestaurantPickerActivity.this.wait();
+            } catch (InterruptedException e) {
+                Log.e(TAG, "Get input failed");
+            }
+        }
+    }
+
     private class GetLocalRestaurantsTask extends AsyncTask<Void, Void, String> {
         private static final String placesKey = "AIzaSyATQKEJVe6hrEvnNRuMbK68ySMnRM17uYQ";
 
@@ -103,8 +165,6 @@ public class RestaurantPickerActivity extends Activity {
         protected String doInBackground(Void... voids) {
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Location location = null;
-            double latitude;
-            double longitude;
 
             boolean isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
             boolean isNetworkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -120,9 +180,7 @@ public class RestaurantPickerActivity extends Activity {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
             } else {
-                // Add code to select custom location
-                latitude = 40.502660;
-                longitude = -74.451676;
+                getAddress();
             }
 
             String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" + placesKey

@@ -2,10 +2,10 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="/Users/richardchu/Documents/GitHub/Friendcast/facebook/src/main/assets" />
+        <source path="C:\Users\Richard\Documents\GitHub\Friendcast\facebook\src\main\assets" />
     </dataSet>
     <dataSet config="release" >
-        <source path="/Users/richardchu/Documents/GitHub/Friendcast/facebook/src/release/assets" />
+        <source path="C:\Users\Richard\Documents\GitHub\Friendcast\facebook\src\release\assets" />
     </dataSet>
 
 </merger>
